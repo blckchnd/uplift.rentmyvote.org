@@ -135,7 +135,7 @@
 
                         tdNum.innerHTML = `${j}`;
 
-                        tdUrl.innerHTML = `<a href="http://memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a>`;
+                        tdUrl.innerHTML = `<a href="http://memestagram.io/card/${bid.url.substring(bid.url.lastIndexOf('@') + 1, bid.url.length)}">${bid.url}</a>`;
 
 
                         tdAmount.innerHTML = `${bid.amount}`;
@@ -174,8 +174,8 @@
                             tdUrl.innerHTML = `<a href="https://goldvoice.club${bid.url}">${bid.url}</a>`;
                         } else if (bid.urls) {
                             let urls = "";
-                            bid.urls.forEach(memeUrl => {
-                                urls += `<li><a href="http://memestagram.io/card/${memeUrl.substring(memeUrl.lastIndexOf('@') + 1, memeUrl.length)}">${memeUrl}</a></li>`;
+                            bid.urls.forEach(url => {
+                                urls += `<li><a href="http://memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a></li>`;
                             });
                             tdUrl.innerHTML = `Мем Пак: <br/><ul>${urls}</ul>`;
                         }
