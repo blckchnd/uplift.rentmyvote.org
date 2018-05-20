@@ -43,6 +43,20 @@
         <tbody id=queue>
         </tbody>
     </table>
+
+    <h2>Очередь в мем пак</h2>
+    <table class="table table-bordered" style="max-width: 800px; overflow-x:auto;">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Мем</th>
+            <th>Ставка</th>
+            <th>Время до протухания</th>
+        </tr>
+        </thead>
+        <tbody id=meme_queue>
+        </tbody>
+    </table>
 </div>
 <script id="javascript">
     var roundTimer = null;
@@ -50,6 +64,7 @@
 
     const url = 'https://uplift.rentmyvote.org/api/bids';
     const table = document.getElementById('queue');
+    const memeTable = document.getElementById('meme_queue');
 
     function createNode(element) {
         return document.createElement(element);
@@ -97,10 +112,43 @@
                     table.removeChild(table.firstChild);
                 }
 
+                while (memeTable.firstChild) {
+                    memeTable.removeChild(memeTable.firstChild);
+                }
+
                 let queue = data.queue;
-                let n = 0;
+                let memeQueue = data.meme_queue;
+
 
                 startTimer(data.time);
+
+                // memes
+                if (memeQueue) {
+                    let j = 0;
+                    memeQueue.map(function (bid) {
+                        j++;
+                        let tr = createNode('tr'),
+                            tdNum = createNode('td'),
+                            tdUrl = createNode('td'),
+                            tdAmount = createNode('td'),
+                            tdLeft = createNode('td');
+
+                        tdNum.innerHTML = `${j}`;
+
+                        tdUrl.innerHTML = `<a href="http://memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a>`;
+
+
+                        tdAmount.innerHTML = `${bid.amount}`;
+                        tdLeft.innerHTML = `${bid.left}`;
+                        append(tr, tdNum);
+                        append(tr, tdUrl);
+                        append(tr, tdAmount);
+                        append(tr, tdLeft);
+                        append(memeTable, tr);
+                    });
+                }
+
+                let n = 0;
                 if (queue.length == 0) {
                     let tr = createNode('tr');
                     let td = createNode('td');
@@ -121,7 +169,18 @@
                         else if (bid.left.startsWith("0")) tr.className += " danger";
 
                         tdNum.innerHTML = `${n}`;
-                        tdUrl.innerHTML = `<a href="https://goldvoice.club${bid.url}">${bid.url}</a>`;
+
+                        if (bid.url) {
+                            tdUrl.innerHTML = `<a href="https://goldvoice.club${bid.url}">${bid.url}</a>`;
+                        } else if (bid.urls) {
+                            let urls = "";
+                            bid.urls.forEach(url => {
+                                urls += `<li><a href="http://memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a></li>`;
+                            });
+                            tdUrl.innerHTML = `Мем Пак: <br/><ul>${urls}</ul>`;
+                        }
+
+
                         tdAmount.innerHTML = `${bid.amount}`;
                         tdLeft.innerHTML = `${bid.left}`;
                         append(tr, tdNum);
