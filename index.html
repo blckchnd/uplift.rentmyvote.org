@@ -138,7 +138,7 @@
                         tdUrl.innerHTML = `<a href="http://memestagram.io/card/${bid.url.substring(bid.url.lastIndexOf('@') + 1, bid.url.length)}">${bid.url}</a>`;
 
 
-                        tdAmount.innerHTML = `${bid.amount}`;
+                        tdAmount.innerHTML = `${bid.amount.toFixed(2)}`;
                         tdLeft.innerHTML = `${bid.left}`;
                         append(tr, tdNum);
                         append(tr, tdUrl);
@@ -169,7 +169,7 @@
                         else if (bid.left.startsWith("0")) tr.className += " danger";
 
                         tdNum.innerHTML = `${n}`;
-                        tdAmount.innerHTML = `${bid.amount}`;
+                        tdAmount.innerHTML = `${bid.amount.toFixed(2)}`;
 
                         if (bid.url) {
                             tdUrl.innerHTML = `<a href="https://goldvoice.club${bid.url}">${bid.url}</a>`;
