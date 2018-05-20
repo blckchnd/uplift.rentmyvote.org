@@ -139,6 +139,7 @@
 
 
                         tdAmount.innerHTML = `${bid.amount}`;
+                        tdLeft.innerHTML = `${bid.left}`;
                         append(tr, tdNum);
                         append(tr, tdUrl);
                         append(tr, tdAmount);
@@ -168,9 +169,11 @@
                         else if (bid.left.startsWith("0")) tr.className += " danger";
 
                         tdNum.innerHTML = `${n}`;
+                        tdAmount.innerHTML = `${bid.amount}`;
 
                         if (bid.url) {
                             tdUrl.innerHTML = `<a href="https://goldvoice.club${bid.url}">${bid.url}</a>`;
+                            tdLeft.innerHTML = `${bid.left}`;
                         } else if (bid.urls) {
                             let urls = "";
                             bid.urls.forEach(url => {
@@ -180,8 +183,7 @@
                         }
 
 
-                        tdAmount.innerHTML = `${bid.amount}`;
-                        tdLeft.innerHTML = `${bid.left}`;
+
                         append(tr, tdNum);
                         append(tr, tdUrl);
                         append(tr, tdAmount);
