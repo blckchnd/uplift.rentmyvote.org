@@ -241,7 +241,7 @@
             if(err || !result[0]) {
                 console.log(err);
                 var jsone = JSON.stringify(err, null, 4);
-                document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Подробности ошибки: "+jsone+"</div>");
+                document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Подробности ошибки: <xmp>"+jsone+"</xmp></div>");
                 //return alert('ОШИБКА! Откройте консоль браузера чтобы увидеть подробности ошибки!', err)
             }else{
                 console.log(result[0])
@@ -251,7 +251,7 @@
                     wif = activekey.active,
                     isWIF = golos.auth.wifIsValid(wif, pubWif);
                 if (!isWIF) {
-                    document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Указанный пароль не подходит к аккаунту</div>");
+                    document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2><xmp>Указанный пароль не подходит к аккаунту</xmp></div>");
                     return alert('Указанный пароль не подходит к аккаунту', username);
                 }
                 var from = username,
@@ -261,12 +261,16 @@
                 if (confirm("Отправить "+amount_+" с аккаунта "+from+ " аккаунту "+to+"?")) {
                     golos.broadcast.transfer(wif, from, to, amount_, memo, function(err, result) {
                         console.log(err, result);
-                        if (err) return alert(err)
+                        if (err) {
+                            var jsone = JSON.stringify(err, null, 4);
+                            document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Подробности ошибки: <xmp>"+jsone+"</xmp></div>");
+                            return alert(err);
+                        }
                         json = JSON.stringify(result, null, 4);
                         document.getElementById("invoice").classList.add("done");
                         window.scrollTo(0, 0);
                         //return alert("Вы отправили "+amount_+" с аккаунта "+from+ " аккаунту "+to+"</h3>RAW Транзакция: </br><xmp>"+json+"</xmp>");
-                        document.getElementById('out').insertAdjacentHTML("afterbegin","<h2>Успешно!</h2><h3>Вы отправили "+amount+" с аккаунта "+from+ " аккаунту "+to+"</h3>RAW Транзакция: </br><xmp>"+json+"</xmp>");
+                        document.getElementById('out').insertAdjacentHTML("afterbegin","<h2>Успешно!</h2><h3>Посмотреть состояние голосования можно на странице: <a href='https://uplift.rentmyvote.org/index.html'>https://uplift.rentmyvote.org/index.html</a></h3>RAW Транзакция: </br><xmp>"+json+"</xmp>");
                     });
                 } else {
                     return false;
