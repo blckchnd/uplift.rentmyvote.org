@@ -194,7 +194,7 @@
             <td></td>
 
             <td>
-                Всего: <span id="total_amount">33.000 GBG</span>
+                Всего: <span id="total_amount">??? GBG</span>
             </td>
         </tr>
 
@@ -220,14 +220,14 @@
     // usage
     var sender = getHashValue('sender');
     var amount = getHashValue('amount');
-    var url = getHashValue('url');
+    var url = decodeURIComponent(getHashValue('url'));
 
     document.getElementById("sender_input").value = sender;
 
-    document.getElementById("sender").innerHTML = sender;
+    document.getElementById("sender").innerHTML = "Клиент:<br>" + sender;
     document.getElementById("amount").innerHTML = amount + " GBG";
     document.getElementById("total_amount").innerHTML = amount + " GBG";
-    document.getElementById("url").innerHTML = "<b>UPVOTE</b>: " + decodeURIComponent(url);
+    document.getElementById("url").innerHTML = "<b>UPVOTE</b>: <a href='" + url + "'>" + url + "</a>";
 
     golos.config.set('url','https://api.golos.blckchnd.com');
 
@@ -235,7 +235,7 @@
         document.getElementById('out').innerHTML = "";
 
         var username = document.getElementById("sender_input").value.toLowerCase().replace(/@/g, '').replace(/ /g, '');
-        var password = document.getElementById("wif_input").value.replace(/ /g, '')
+        var password = document.getElementById("wif_input").value.replace(/ /g, '');
 
         golos.api.getAccounts([username], function(err, result){
             if(err || !result[0]) {
@@ -257,7 +257,7 @@
                 var from = username,
                     to = "uplift",
                     amount_ = amount + " GBG",
-                    memo = decodeURIComponent(url);
+                    memo = url;
                 if (confirm("Отправить "+amount_+" с аккаунта "+from+ " аккаунту "+to+"?")) {
                     golos.broadcast.transfer(wif, from, to, amount_, memo, function(err, result) {
                         console.log(err, result);
