@@ -158,12 +158,12 @@
                 <table>
                     <tr>
                         <td>
-                            Uplift Ltd.<br>
-                            Golos blockchain
+                            ООО "Аплифт"<br>
+                            Голос Блокчейн
                         </td>
 
                         <td id="sender">
-                            Client
+                            Клиент
                         </td>
                     </tr>
                 </table>
@@ -172,11 +172,11 @@
 
         <tr class="heading">
             <td>
-                Item
+                Наименование
             </td>
 
             <td>
-                Price
+                Цена
             </td>
         </tr>
 
@@ -194,18 +194,18 @@
             <td></td>
 
             <td>
-                Total: <span id="total_amount">??? GBG</span>
+                Всего: <span id="total_amount">??? GBG</span>
             </td>
         </tr>
 
         <tr class="buttons">
             <td colspan="2">
-                <p>Account:</p>
+                <p>Логин:</p>
                 <input type="text" name="sender" id="sender_input">
-                <p>Password:</p>
+                <p>Пароль:</p>
                 <input name="password" id="wif_input" type="password" autofocus>
                 <p></p>
-                <button class="button" id="submit_btn">Pay</button>
+                <button class="button" id="submit_btn">Оплатить</button>
             </td>
         </tr>
     </table>
@@ -224,7 +224,7 @@
 
     document.getElementById("sender_input").value = sender;
 
-    document.getElementById("sender").innerHTML = "Client:<br>" + sender;
+    document.getElementById("sender").innerHTML = "Клиент:<br>" + sender;
     document.getElementById("amount").innerHTML = amount + " GBG";
     document.getElementById("total_amount").innerHTML = amount + " GBG";
     document.getElementById("url").innerHTML = "<b>UPVOTE</b>: <a href='" + url + "'>" + url + "</a>";
@@ -241,36 +241,36 @@
             if(err || !result[0]) {
                 console.log(err);
                 var jsone = JSON.stringify(err, null, 4);
-                document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Error!</h2>Description: <xmp>"+jsone+"</xmp></div>");
-                //return alert('Error! Open console to see details!', err)
+                document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Подробности ошибки: <xmp>"+jsone+"</xmp></div>");
+                //return alert('ОШИБКА! Откройте консоль браузера чтобы увидеть подробности ошибки!', err)
             }else{
-                console.log(result[0]);
+                console.log(result[0])
                 var x = result[0],
                     pubWif = x.active.key_auths[0][0],
                     activekey= golos.auth.getPrivateKeys(username, password, ['active']),
                     wif = activekey.active,
                     isWIF = golos.auth.wifIsValid(wif, pubWif);
                 if (!isWIF) {
-                    document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Error!</h2><xmp>Invalid password!</xmp></div>");
-                    return alert('Invalid account or password', username);
+                    document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2><xmp>Указанный пароль не подходит к аккаунту</xmp></div>");
+                    return alert('Указанный пароль не подходит к аккаунту', username);
                 }
                 var from = username,
                     to = "uplift",
                     amount_ = amount + " GBG",
                     memo = url;
-                if (confirm("Send "+amount_+" from "+from+ " to "+to+"?")) {
+                if (confirm("Отправить "+amount_+" с аккаунта "+from+ " аккаунту "+to+"?")) {
                     golos.broadcast.transfer(wif, from, to, amount_, memo, function(err, result) {
                         console.log(err, result);
                         if (err) {
                             var jsone = JSON.stringify(err, null, 4);
-                            document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Error!</h2>Details: <xmp>"+jsone+"</xmp></div>");
+                            document.getElementById('out').insertAdjacentHTML("afterbegin","<div class='err'><h2>Ошибка!</h2>Подробности ошибки: <xmp>"+jsone+"</xmp></div>");
                             return alert(err);
                         }
                         json = JSON.stringify(result, null, 4);
                         document.getElementById("invoice").classList.add("done");
                         window.scrollTo(0, 0);
-                        //return alert("You sent "+amount_+" from "+from+ " to "+to+"</h3>RAW: </br><xmp>"+json+"</xmp>");
-                        document.getElementById('out').insertAdjacentHTML("afterbegin","<h2>Success!</h2><h3>Check uplift queue: <a href='https://uplift.rentmyvote.org/index.html'>https://uplift.rentmyvote.org/index.html</a></h3>RAW Transaction: </br><xmp>"+json+"</xmp>");
+                        //return alert("Вы отправили "+amount_+" с аккаунта "+from+ " аккаунту "+to+"</h3>RAW Транзакция: </br><xmp>"+json+"</xmp>");
+                        document.getElementById('out').insertAdjacentHTML("afterbegin","<h2>Успешно!</h2><h3>Посмотреть состояние голосования можно на странице: <a href='https://uplift.rentmyvote.org/index.html'>https://uplift.rentmyvote.org/index.html</a></h3>RAW Транзакция: </br><xmp>"+json+"</xmp>");
                     });
                 } else {
                     return false;
