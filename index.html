@@ -29,7 +29,7 @@
     <h1>Очередь</h1>
     <h5>Время до нового окна: <span id=timer></span></h5>
     <h6>
-        <a href="https://golos.io/ru--obnovlenie/@uplift/ru-obnovlenie-s-30042018-pravila-aukcziona-menyayutsya">ПРАВИЛА</a>
+        <a href="https://golos.io/ru--obnovlenie/@uplift/ru-obnovlenie-s-04062018-menxshe-zhira-bogu-zhira">ПРАВИЛА</a>
     </h6>
     <table class="table table-bordered" style="max-width: 800px; overflow-x:auto;">
         <thead>
@@ -132,6 +132,8 @@
                             tdUrl = createNode('td'),
                             tdAmount = createNode('td'),
                             tdLeft = createNode('td');
+
+                        if (bid.left.startsWith("0")) tr.className += " danger";
 
                         tdNum.innerHTML = `${j}`;
 
