@@ -137,7 +137,7 @@
 
                         tdNum.innerHTML = `${j}`;
 
-                        tdUrl.innerHTML = `<a href="http://memestagram.io/card/${bid.url.substring(bid.url.lastIndexOf('@') + 1, bid.url.length)}">${bid.url}</a>`;
+                        tdUrl.innerHTML = `<a href="https://golos.memestagram.io/card/${bid.url.substring(bid.url.lastIndexOf('@') + 1, bid.url.length)}">${bid.url}</a>`;
 
 
                         tdAmount.innerHTML = `${bid.amount.toFixed(2)}`;
@@ -179,9 +179,9 @@
                         } else if (bid.urls) {
                             let urls = "";
                             bid.urls.forEach(url => {
-                                urls += `<li><a href="http://memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a></li>`;
+                                urls += `<li><a href="https://golos.memestagram.io/card/${url.substring(url.lastIndexOf('@') + 1, url.length)}">${url}</a></li>`;
                             });
-                            tdUrl.innerHTML = `<a href="http://memestagram.io/"><img src="memestagram.ico"></a> Мем Пак:<br/><ul style="font-size: 8pt">${urls}</ul>`;
+                            tdUrl.innerHTML = `<a href="https://golos.memestagram.io/"><img src="memestagram.ico"></a> Мем Пак:<br/><ul style="font-size: 8pt">${urls}</ul>`;
                             tdLeft.innerHTML = "💣";
                         }
 
